@@ -53,11 +53,35 @@ node {
             // -------------------------------------------------------------------------
  
             stage('Create Test Scratch Org') {
-                rc = command "${sfdx} force:org:create --targetdevhubusername testHubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1"
+                rc = command "${sfdx} force:org:create --targetdevhubusername testHubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ebike_scratch --wait 10 --durationdays 1"
                 if (rc != 0) {
                     error 'Salesforce test scratch org creation failed.'
                 }
             }
+
+            
+            // -------------------------------------------------------------------------
+            // Display test scratch org info.
+            // -------------------------------------------------------------------------
+ 
+            stage('Display Test Scratch Org') {
+                rc = command "${sfdx} force:org:display --targetusername ebike_scratch"
+                if (rc != 0) {
+                    error 'Salesforce test scratch org display failed.'
+                }
+            }
+
+            // -------------------------------------------------------------------------
+            // Push source to test scratch org.
+            // -------------------------------------------------------------------------
+ 
+            stage('Push To Test Scratch Org') {
+                rc = command "${sfdx} force:source:push --targetusername ebike_scratch"
+                if (rc != 0) {
+                    error 'Salesforce push to test scratch org failed.'
+                }
+            }
+ 
       
      }
     }
