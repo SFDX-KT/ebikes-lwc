@@ -5,7 +5,7 @@ import groovy.json.JsonSlurperClassic
 node {
 
 
-if(env.BRANCH_NAME)
+if(env.BRANCH_NAME == 'main')
    scratchOrg env.BRANCH_NAME
 
 }
