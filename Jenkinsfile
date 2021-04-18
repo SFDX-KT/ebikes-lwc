@@ -122,9 +122,9 @@ def scratchOrg(branchName) {
                  PACKAGE_VERSION = response.result.SubscriberPackageVersionId
                  response = null
                  echo ${PACKAGE_VERSION}
-                 
+
                 if (rc != 0) {
-                    error 'Salesforce unit test run in test scratch org failed.'
+                    error 'Salesforce Package creation failed.'
                 }
             }
  
