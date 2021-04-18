@@ -42,10 +42,7 @@ def scratchOrg(branchName) {
      withCredentials([file(credentialsId:  'JWT'	, variable: 'server_key_file')]) {     
           stage('SFDX Update'){
           timeout(time: 3, unit: 'MINUTES') {
-              
-        command "echo %cd%"
-        command "echo ${env.JOB_NAME}"
-        command "echo ${env.WORKSPACE}"
+        
            rc = command "${sfdx} update" 
            if(rc!=0){
            
@@ -102,7 +99,7 @@ def scratchOrg(branchName) {
             // -------------------------------------------------------------------------
  
             stage('Run Tests In Test Scratch Org') {
-                rc = command "${toolbelt}/sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat tap --codecoverage --testlevel ${TEST_LEVEL}"
+                rc = command "${sfdx} force:apex:test:run --targetusername ciorg --wait 10 --resultformat tap --codecoverage --testlevel ${TEST_LEVEL}"
                 if (rc != 0) {
                     error 'Salesforce unit test run in test scratch org failed.'
                 }
