@@ -71,6 +71,7 @@ node {
  
             stage('Display Test Scratch Org') {
                 rc = command "${sfdx} force:org:display --targetusername ebike_scratch"
+                command"${sfdx} force:org:open --targetusername ebike_scratch"
                 if (rc != 0) {
                     error 'Salesforce test scratch org display failed.'
                 }
