@@ -20,6 +20,9 @@ node {
  
     stage('checkout source') {
         checkout scm
+        
+        command "echo %cd%"
+        command "echo ${env.JOB_NAME}"
     }
   
   
