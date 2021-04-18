@@ -17,6 +17,7 @@ def scratchOrg(branchName) {
     def SERVER_KEY_CREDENTALS_ID= env.SERVER_KEY_CREDENTALS_ID
     def TEST_LEVEL='RunLocalTests'
     def PACKAGE_VERSION
+    def PACKAGE_NAME = "ebike_dev"
     def SF_INSTANCE_URL = "https://login.salesforce.com"
     def  sfdx='\"C:\\Program Files\\Salesforce CLI\\bin\\sfdx.cmd\"'
   
@@ -104,7 +105,22 @@ def scratchOrg(branchName) {
                     error 'Salesforce unit test run in test scratch org failed.'
                 }
             }
+
+            
+            // -------------------------------------------------------------------------
+            // Run unit tests in test scratch org.
+            // -------------------------------------------------------------------------
  
+            stage('Run Tests In Test Scratch Org') {
+                rc = command "${sfdx} force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg"
+                if (rc != 0) {
+                    error 'Salesforce unit test run in test scratch org failed.'
+                }
+            }
+ 
+ 
+ 
+
       
      }
     }
