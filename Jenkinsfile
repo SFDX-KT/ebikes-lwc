@@ -113,6 +113,16 @@ def scratchOrg(branchName) {
  
             stage('Run Tests In Test Scratch Org') {
                 rc = command "${sfdx} force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg"
+                
+                // Wait 5 minutes for package replication
+                 sleep 300
+
+                 def jsonSlurper = new JsonSlurperClassic()
+                 def response = jsonSlurper.parseText(output)
+                 PACKAGE_VERSION = response.result.SubscriberPackageVersionId
+                 response = null
+                 echo ${PACKAGE_VERSION}
+                 
                 if (rc != 0) {
                     error 'Salesforce unit test run in test scratch org failed.'
                 }
