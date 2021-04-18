@@ -21,8 +21,6 @@ node {
     stage('checkout source') {
         checkout scm
         
-        command "echo %cd%"
-        command "echo ${env.JOB_NAME}"
     }
   
   
@@ -35,6 +33,10 @@ node {
      withCredentials([file(credentialsId:  'JWT'	, variable: 'server_key_file')]) {     
           stage('SFDX Update'){
           timeout(time: 3, unit: 'MINUTES') {
+              
+        command "echo %cd%"
+        command "echo ${env.JOB_NAME}"
+        command "echo ${env.WORKSPACE}"
            rc = command "${sfdx} update" 
            if(rc!=0){
            
