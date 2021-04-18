@@ -1,8 +1,16 @@
 #!groovy
  
 import groovy.json.JsonSlurperClassic
- 
+
 node {
+
+
+if(env.BRANCH_NAME)
+   scratchOrg env.BRANCH_NAME
+
+}
+ 
+def scratchOrg(branchName) {
  
     def SF_CONSUMER_KEY= "3MVG9KI2HHAq33Ry2vLlK9hC672.qmEadb86CU6xjlDirLW1zs.tzAbSxqk84_r1SivpGBuauCXPJBGms20Ed"
     def SF_USERNAME= "amuppidi@lightning-ccc.com"
@@ -13,6 +21,7 @@ node {
     def  sfdx='\"C:\\Program Files\\Salesforce CLI\\bin\\sfdx.cmd\"'
   
   
+   
  
     // -------------------------------------------------------------------------
     // Check out code from source control.
@@ -85,6 +94,17 @@ node {
                 rc = command "${sfdx} force:source:push --targetusername ebike_scratch"
                 if (rc != 0) {
                     error 'Salesforce push to test scratch org failed.'
+                }
+            }
+
+            // -------------------------------------------------------------------------
+            // Run unit tests in test scratch org.
+            // -------------------------------------------------------------------------
+ 
+            stage('Run Tests In Test Scratch Org') {
+                rc = command "${toolbelt}/sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat tap --codecoverage --testlevel ${TEST_LEVEL}"
+                if (rc != 0) {
+                    error 'Salesforce unit test run in test scratch org failed.'
                 }
             }
  
