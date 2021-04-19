@@ -116,72 +116,7 @@ def scratchOrg(branchName) {
                     error 'Salesforce test scratch org deletion failed.'
                 }
             }
- 
- 
- // -------------------------------------------------------------------------
-            // Create package version.
-            // -------------------------------------------------------------------------
- /*
-            stage('Create Package Version') {
-                if (isUnix()) {
-                    output = sh returnStdout: true, script: "${sfdx} force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json --targetdevhubusername testHubOrg"
-                } else {
-                    output = bat(returnStdout: true, script: "${sfdx} force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json --targetdevhubusername testHubOrg").trim()
-                    output = output.readLines().drop(1).join(" ")
-                }
- 
-                // Wait 5 minutes for package replication.
-                sleep 300
- 
-                def jsonSlurper = new JsonSlurperClassic()
-                def response = jsonSlurper.parseText(output)
- 
-                PACKAGE_VERSION = response.result.SubscriberPackageVersionId
- 
-                response = null
- 
-                echo ${PACKAGE_VERSION}
-            }
 
-             // -------------------------------------------------------------------------
-            // Create new scratch org to install package to.
-            // -------------------------------------------------------------------------
- 
-            stage('Create Package Install Scratch Org') {
-                rc = command "${sfdx} force:org:create --targetdevhubusername testHubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10 --durationdays 1"
-                if (rc != 0) {
-                    error 'Salesforce package install scratch org creation failed.'
-                }
-            }
- 
-
- 
-            // -------------------------------------------------------------------------
-            // Display install scratch org info.
-            // -------------------------------------------------------------------------
- 
-            stage('Display Install Scratch Org') {
-                rc = command "${sfdx} force:org:display --targetusername installorg"
-                if (rc != 0) {
-                    error 'Salesforce install scratch org display failed.'
-                }
-            }
-
-            // -------------------------------------------------------------------------
-            // Install package in scratch org.
-            // -------------------------------------------------------------------------
- 
-            stage('Install Package In Scratch Org') {
-                rc = command "${sfdx}/force:package:install --package ${PACKAGE_VERSION} --targetusername installorg --wait 10"
-                if (rc != 0) {
-                    error 'Salesforce package install failed.'
-                }
-            }
- 
- */
- 
-
-      
      }
     }
 }
