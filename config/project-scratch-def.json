@@ -19,11 +19,5 @@
         "userEngagementSettings": {
             "enableOrchestrationInSandbox": true
         }
-    },
-    "packageDirectories": [
-        {
-           "path": "force-app",
-           "default": true
-        }
-     ]
+    }
 }
