@@ -2,9 +2,16 @@
     "packageDirectories": [
         {
             "path": "force-app",
-            "default": true
+            "default": true,
+            "package": "PL_BHG",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT"
         }
     ],
     "namespace": "",
-    "sourceApiVersion": "51.0"
+    "sourceApiVersion": "51.0",
+    "packageAliases": {
+        "PatientLending": "0Ho4M000000Kyk4SAC",
+        "PL_BHG": "0Ho4M000000KykJSAS"
+    }
 }
